@@ -143,7 +143,7 @@ public class DFA {
         fileWriter.append("\n");
         for (State state : this.states) {
             for (Edge edge : state.getEdge()) {
-                fileWriter.append(state.getName() + " x " + edge.getInput() + " = " + edge.getTransition().getName()+ "; ");
+                fileWriter.append(state.getName() + " " + edge.getInput() + " " + edge.getTransition().getName()+ ";");
             }
         }
         fileWriter.append("\n");
