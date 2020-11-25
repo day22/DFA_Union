@@ -1,23 +1,28 @@
+/**
+ * @author: Aidan Day, Noah Lafave
+ * Theory of Computation Coding Project
+ * 
+ */
+
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 
 
 public class DFA {
-    
+    //set of states
     private ArrayList<State> states;
-    private ArrayList<String> alphabet;
-    private String startState;
-    private ArrayList<String> acceptState;
 
-    public DFA(ArrayList<State> states) {
-        this.states = states;
-    }
+    //alphabet set
+    private ArrayList<String> alphabet;
+
+    //sole start state name
+    private String startState;
+
+    //set of accept states 
+    private ArrayList<String> acceptState;
 
     public DFA() {
         this.states = new ArrayList<State>();
@@ -25,37 +30,50 @@ public class DFA {
         this.acceptState = new ArrayList<String>();
     }
 
+    /**
+     * I/O constructor for new DFA 
+     * @param fileName
+     */
     public DFA(String fileName) {
         Scanner dfa1;
         this.states = new ArrayList<State>();
         this.alphabet = new ArrayList<String>();
         this.acceptState = new ArrayList<String>();
 
-        try{
+        try {
             dfa1 = new Scanner(new File(fileName));
-            Scanner stateScanner = new Scanner(dfa1.nextLine());
+
+            Scanner stateScanner = new Scanner(dfa1.nextLine()); 
+
             Scanner alphabetScanner = new Scanner(dfa1.nextLine());
+
             Scanner transitionScanner = new Scanner(dfa1.nextLine());
+
             this.startState = dfa1.nextLine();
+
             Scanner acceptScanner = new Scanner(dfa1.nextLine());
 
+            //read states
             stateScanner.useDelimiter(",");
-            while(stateScanner.hasNext()) {
+            while (stateScanner.hasNext()) {
                this.addState(new State(stateScanner.next()));
             }
             
+            //read alphabet
             alphabetScanner.useDelimiter(",");
-            while(alphabetScanner.hasNext()) {
+            while (alphabetScanner.hasNext()) {
                this.addAlphabet(alphabetScanner.next());
             }
 
+            //read accept state 
             acceptScanner.useDelimiter(",");
             while (acceptScanner.hasNext()) {
                 this.acceptState.add(acceptScanner.next());
             }
-
+            
+            //read transitions for each state 
             transitionScanner.useDelimiter(";");
-            while(transitionScanner.hasNext()) {
+            while (transitionScanner.hasNext()) {
                 Scanner transitionDecoder = new Scanner(transitionScanner.next());
                 String sState = transitionDecoder.next();
                 String sAlpha = transitionDecoder.next();
@@ -75,61 +93,75 @@ public class DFA {
         }
     }
     
-
+    /**
+     * adds state to DFA
+     * @param state
+     */
     public void addState(State state) {
 
         this.states.add(state);
     }
 
+    /**
+     * adds character to alphabet
+     * @param alpha
+     */
     public void addAlphabet(String alpha) {
         this.alphabet.add(alpha);
     }
 
+    /**
+     * returns state arrayList
+     * @return
+     */
     public ArrayList<State> getStates() {
         return this.states;
     }
 
+    /**
+     * returns alphabet arrayList
+     */
     public ArrayList<String> getAlphabet() {
         return this.alphabet;
     }
 
-    public String toString(PrintWriter fileWriter) {
-            for (State state : this.states) {
-                System.out.print(state.getName() + " ");
-                fileWriter.append(state.getName() + " ");
-    
-            }
-            System.out.println();
-            fileWriter.append("\n");
-            for (String string : this.alphabet) {
-                System.out.print(string + " ");
-                fileWriter.append(string + " ");
-            }
-            System.out.println();
-            fileWriter.append("\n");
-            for (State state : this.states) {
-                for (Edge edge : state.getEdge()) {
-                    System.out.print(state.getName() + " x " + edge.getInput() + " = " + edge.getTransition().getName()+ "; ");
-                    fileWriter.append(state.getName() + " x " + edge.getInput() + " = " + edge.getTransition().getName()+ "; ");
-                }
-            }
-            System.out.println();
-            fileWriter.append("\n");
+    /**
+     * writes DFA fivetupple to output.txt
+     * @param fileWriter
+     * @return
+     */
+    public void write(PrintWriter fileWriter) {
+        
+        for (State state : this.states) {
+            fileWriter.append(state.getName() + " ");
 
-            System.out.println(this.startState);
-            fileWriter.append(this.startState);
-            fileWriter.append("\n");
+        }
+        fileWriter.append("\n");
+        for (String string : this.alphabet) {
+            fileWriter.append(string + " ");
+        }
+        fileWriter.append("\n");
+        for (State state : this.states) {
+            for (Edge edge : state.getEdge()) {
+                fileWriter.append(state.getName() + " x " + edge.getInput() + " = " + edge.getTransition().getName()+ "; ");
+            }
+        }
+        fileWriter.append("\n");
 
-            for (String accepString : this.acceptState) {
-                System.out.print(accepString + " ");
-                fileWriter.append(accepString + " ");
-            }        
-            System.out.println();
-            fileWriter.append("\n");
+        fileWriter.append(this.startState);
+        fileWriter.append("\n");
 
-        return "";
+        for (String accepString : this.acceptState) {
+            fileWriter.append(accepString + " ");
+        }        
+        fileWriter.append("\n");
     }
 
+    /**
+     * Iterates through states and returns corresponding state with matching name 
+     * @param name
+     * @return
+     */
     public State findStateByName(String name) {
         State newState = null;
         for (State state : this.states) {

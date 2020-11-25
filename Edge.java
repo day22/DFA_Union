@@ -1,3 +1,11 @@
+/**
+ * @author: Aidan Day, Noah Lafave
+ * Theory of Computation Coding Project
+ * 
+ */
+/**
+ * Edge class acts as the connections between states in DFA
+ */
 public class Edge {
     private String input;
     private State transition;

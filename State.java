@@ -1,3 +1,9 @@
+/**
+ * @author: Aidan Day, Noah Lafave
+ * Theory of Computation Coding Project
+ * 
+ */
+
 import java.util.ArrayList;
 
 public class State {
@@ -27,6 +33,11 @@ public class State {
         return edges;
     }
 
+    /**
+     * when called on state returns the state that would result from input on current state 
+     * @param input
+     * @return
+     */
     public State getTransitionOn(String input) {
         for (Edge edge : this.getEdge()) {
             if(edge.getInput().equals(input)) {
