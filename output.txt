@@ -1,5 +1,0 @@
-q1r1 q1r2 q2r1 q2r2 
-0 1 
-q1r1 x 0 = q1r2; q1r1 x 1 = q2r1; q1r2 x 0 = q1r1; q1r2 x 1 = q2r2; q2r1 x 0 = q2r2; q2r1 x 1 = q1r1; q2r2 x 0 = q2r1; q2r2 x 1 = q1r2; 
-q1r1
-q1r1 q1r2 q2r2 

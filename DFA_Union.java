@@ -1,3 +1,9 @@
+/**
+ * @author: Aidan Day, Noah Lafave
+ * 
+ * 
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
